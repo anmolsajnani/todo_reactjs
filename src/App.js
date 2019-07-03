@@ -61,7 +61,7 @@ export default class App extends React.Component{
       item.id!==id);
       this.setState({
         items:filtereditems
-      });
+      });, endDate 
   };
   handleEdit = (id)=>{ 
     const filtereditems = this.state.items.filter(item=>
@@ -93,15 +93,14 @@ export default class App extends React.Component{
       isSearch: false
     });
   }
-  handleDate = ({ startDate, endDate }) => {
+  handleDate = ({ startDate}) => {
     startDate = startDate || this.state.startDate;
-    endDate = endDate || this.state.endDate;
-    this.setState({ startDate, endDate });
-  };
+    this.setState({ startDate});
+  };, endDate 
 
   handleChangeStart = startDate => this.handleDate({ startDate });
 
-  handleChangeEnd = endDate => this.handleDate({ endDate });
+ 
   
 
   Sort =()=> {
@@ -130,7 +129,7 @@ export default class App extends React.Component{
       var y = b.name.toLowerCase();
       
       if (x < y) {return -1;}
-      if (x > y) {return 1;}
+      if (x > y) {return 1;}, endDate 
      
 
     })
@@ -163,9 +162,7 @@ export default class App extends React.Component{
                 handleSearch={this.handleSearch}
                 ClickSearch={this.ClickSearch}
                 startDate={this.state.startDate}
-                endDate={this.state.endDate}
                 handleChangeStart={this.handleChangeStart}
-                handleChangeEnd={this.handleChangeEnd}
                 title={this.state.title}
                 name={this.state.name}
                 Sort={this.Sort}

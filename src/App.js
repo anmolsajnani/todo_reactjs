@@ -1,7 +1,7 @@
 import React from "react";
+import './App.css'
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from "uuid";
 
@@ -10,14 +10,11 @@ export default class App extends React.Component{
   state={
     items:[],
     searcheditems:[],
-    filtereditems:[],
     id:uuid(),
     name: '',
     item:'',
     editItem: false,
     search: '',
-    isOldestFirst: false,
-    startDate: new Date("2019/07/03"),
     isSearch:true
   }
   handleItem=(e)=>{
@@ -61,7 +58,7 @@ export default class App extends React.Component{
       item.id!==id);
       this.setState({
         items:filtereditems
-      });, endDate 
+      });
   };
   handleEdit = (id)=>{ 
     const filtereditems = this.state.items.filter(item=>
@@ -93,67 +90,60 @@ export default class App extends React.Component{
       isSearch: false
     });
   }
-  handleDate = ({ startDate}) => {
-    startDate = startDate || this.state.startDate;
-    this.setState({ startDate});
-  };, endDate 
-
-  handleChangeStart = startDate => this.handleDate({ startDate });
-
- 
-  
-
-  Sort =()=> {
+  SortAscDate =()=> {
     const items = this.state.items
-    let newItemList = items
-    debugger
     items.sort((a, b) => {
       var x = a.date;
       var y = b.date;
       if (x < y) {return -1;}
       if (x > y) {return 1;}
-     
-
     })
-    
     this.setState({
-    isOldestFirst: !this.state.isOldestFirst,
     items
   })}
-  SortAlpha=()=> {
+  SortDesDate =()=> {
     const items = this.state.items
-    let newItemList = items
-    debugger
+    items.sort((a, b) => {
+      var x = a.date;
+      var y = b.date;
+      if (x < y) {return 1;}
+      if (x > y) {return -1;}
+    })
+    this.setState({
+    items
+  })}
+  SortAlphaAsc=()=> {
+    const items = this.state.items
     items.sort((a, b) => {
       var x = a.name.toLowerCase();
       var y = b.name.toLowerCase();
       
       if (x < y) {return -1;}
-      if (x > y) {return 1;}, endDate 
-     
-
+      if (x > y) {return 1;}
     })
-    
-    
     this.setState({
-    isOldestFirst: !this.state.isOldestFirst,
     items
     })
   }
-  DateSearch=(startdate)=>{
-    console.log("his")
-    const filtereditems = this.state.items.filter(item=>
-      item.date==startdate);
-      console.log(filtereditems)
+  SortAlphaDes=()=> {
+    const items = this.state.items
+    items.sort((a, b) => {
+      var x = a.name.toLowerCase();
+      var y = b.name.toLowerCase();
+      
+      if (x < y) {return 1;}
+      if (x > y) {return -1;}
+    })
+    this.setState({
+    items
+    })
   }
+ 
   render(){
-    console.log("item ",this.state.items)
-
       return(
         <div className="container">
           <div className="row">
-            <div classname="col-10 mx-auto col-md-8 mt-4">
-              <h3 classname="text-capitalize text-center">
+            <div className="col-md-6 offset-md-3">
                 <TodoInput item={this.state.item}
                 handleItem={this.handleItem} 
                 handleChange={this.handleChange}
@@ -161,24 +151,19 @@ export default class App extends React.Component{
                 editItem={this.state.editItem}
                 handleSearch={this.handleSearch}
                 ClickSearch={this.ClickSearch}
-                startDate={this.state.startDate}
-                handleChangeStart={this.handleChangeStart}
                 title={this.state.title}
                 name={this.state.name}
-                Sort={this.Sort}
-                SortAlpha={this.SortAlpha}
-                DateSearch={this.DateSearch}
-                
-                />
-                
+                ClearList={this.clearList}/>
+
                 <TodoList items={this.state.items}
-                clearList={this.clearList}
                 handleDelete={this.handleDelete}
                 handleEdit={this.handleEdit}
                 searcheditems={this.state.searcheditems}
                 isSearch={this.state.isSearch}
-                />
-              </h3>
+                SortAscDate={this.SortAscDate}
+                SortDesDate={this.SortDesDate}
+                SortAlphaAsc={this.SortAlphaAsc}
+                SortAlphaDes={this.SortAlphaDes}/> 
             </div>
           </div>
 
@@ -186,4 +171,5 @@ export default class App extends React.Component{
       );
   }
 }
+
 
